@@ -69,7 +69,7 @@ if options == "🖼️ Upload & Predict":
         if result == "Noninfected":
             st.success("The ultrasound image is classified as **Noninfected**.")
             clinical_insights = """
-            **Clinical Insights**:
+            ###Clinical Insights:
             - Normal ovarian size (<10 cm³).
             - Fewer than 12 follicles, evenly distributed.
             - Homogeneous ovarian stroma.
@@ -85,7 +85,7 @@ if options == "🖼️ Upload & Predict":
         else:
             st.error("The ultrasound image is classified as **Infected**.")
             clinical_insights = """
-            **Clinical Insights**:
+            ###Clinical Insights:
             - Increased ovarian size (>10 cm³).
             - Presence of 12+ follicles (2-9 mm) arranged peripherally.
             - "String of pearls" appearance observed.
