@@ -8,3 +8,4 @@ pandas>=1.4.0
 scikit-learn>=1.1.0
 seaborn>=0.12.0
 fpdf>=1.7.2
+gdown
