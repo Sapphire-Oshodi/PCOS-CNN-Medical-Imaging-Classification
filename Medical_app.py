@@ -39,7 +39,7 @@ options = st.sidebar.radio(
 if options == "🖼️ Upload & Predict":
     st.title("Welcome to the Medical Imaging Diagnosis PCOS Dashboard")
     st.image("pngwing.com (25).png", use_container_width=True)
-    st.write("**This app provides insights into the medical imaging analysis.** ")
+    st.write("## **This app provides insights into the medical imaging analysis.** ")
     st.write("Upload an ultrasound image to classify it as **Infected** or **Noninfected**.")
     
     threshold = st.sidebar.slider("Confidence Threshold", 0.0, 1.0, 0.5, 0.01)
