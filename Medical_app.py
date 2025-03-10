@@ -5,6 +5,7 @@ from PIL import Image
 import numpy as np
 import os
 import gdown
+from fpdf import FPDF
 
 # Function to load the trained model, download it if necessary
 @st.cache_resource
@@ -67,23 +68,60 @@ if options == "🖼️ Upload & Predict":
 
         if result == "Noninfected":
             st.success("The ultrasound image is classified as **Noninfected**.")
-            st.markdown("""
-            **Clinical Insights**:
+            clinical_insights = """
+            Clinical Insights:
             - Normal ovarian size (<10 cm³).
             - Fewer than 12 follicles, evenly distributed.
             - Homogeneous ovarian stroma.
             - No cystic patterns detected.
-            """)
+            """
         else:
             st.error("The ultrasound image is classified as **Infected**.")
-            st.markdown("""
-            **Clinical Insights**:
+            clinical_insights = """
+            Clinical Insights:
             - Increased ovarian size (>10 cm³).
             - Presence of 12+ follicles (2-9 mm) arranged peripherally.
             - "String of pearls" appearance observed.
             - Increased stromal echogenicity.
             - Potential thickened endometrium.
-            """)
+            """
+
+        # Display clinical insights
+        st.markdown(clinical_insights)
+
+        # Generate and Download PDF
+        if st.button("Download Report"):
+            # Save uploaded image temporarily
+            uploaded_image_path = "uploaded_image.jpg"
+            img.save(uploaded_image_path)
+
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.set_font("Arial", size=12)
+            pdf.cell(200, 10, txt="PCOS Medical Diagnosis Report", ln=True, align="C")
+            pdf.ln(10)
+            pdf.cell(200, 10, txt=f"Patient Name: {user_name}", ln=True)
+            pdf.cell(200, 10, txt=f"Classification Result: {result}", ln=True)
+            pdf.cell(200, 10, txt=f"Prediction Confidence: {confidence}%", ln=True)
+            pdf.ln(10)
+            pdf.multi_cell(200, 10, txt=clinical_insights)
+            pdf.ln(10)
+            pdf.cell(200, 10, txt="Uploaded Ultrasound Image:", ln=True)
+            pdf.image(uploaded_image_path, x=10, y=None, w=100)  # Adjust size and position as needed
+
+            # Generate PDF as bytes
+            pdf_content = pdf.output(dest="S").encode("latin1")
+
+            # Clean up temporary file
+            os.remove(uploaded_image_path)
+
+            # Streamlit download button
+            st.download_button(
+                label="Download Report as PDF",
+                data=pdf_content,
+                file_name=f"{user_name.replace(' ', '_')}_PCOS_Report.pdf",
+                mime="application/pdf"
+            )
 
 # About the Model section
 elif options == "📊 About the Model":
@@ -95,8 +133,6 @@ elif options == "📊 About the Model":
     """)
 
     st.markdown("#### Model Performance During Training")
-
-    # Display graphs saved from Jupyter Notebook
     st.image("1.jpeg", caption="Training and Validation Accuracy", use_container_width=True)
     st.image("2.jpeg", caption="Training and Validation Loss", use_container_width=True)
 
@@ -104,8 +140,6 @@ elif options == "📊 About the Model":
 elif options == "🧪 Evaluation":
     st.header("🧪 Model Evaluation")
     st.write("Evaluate the model's performance on the test dataset.")
-
-    # Display graphs or other metrics if needed
     st.markdown("#### Confusion Matrix")
     st.image("3.jpeg", caption="Confusion Matrix", use_container_width=True)
 
