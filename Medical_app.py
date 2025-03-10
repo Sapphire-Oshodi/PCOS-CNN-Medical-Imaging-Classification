@@ -40,10 +40,8 @@ if options == "🖼️ Upload & Predict":
     st.title("Welcome to the Medical Imaging Diagnosis PCOS Dashboard")
     st.image("pngwing.com (25).png", use_container_width=True)
     st.markdown(
-    "<h4 style='color:#e75480;'> **This app provides insights into the medical imaging analysis.** </h4>",
+    "<h4 style='color:#e75480;'>This app provides insights into the medical imaging analysis.</h4>",
     unsafe_allow_html=True,)
-
-    
     st.write("Upload an ultrasound image to classify it as **Infected** or **Noninfected**.")
     
     threshold = st.sidebar.slider("Confidence Threshold", 0.0, 1.0, 0.5, 0.01)
