@@ -69,25 +69,41 @@ if options == "🖼️ Upload & Predict":
         if result == "Noninfected":
             st.success("The ultrasound image is classified as **Noninfected**.")
             clinical_insights = """
-            Clinical Insights:
+            **Clinical Insights**:
             - Normal ovarian size (<10 cm³).
             - Fewer than 12 follicles, evenly distributed.
             - Homogeneous ovarian stroma.
             - No cystic patterns detected.
             """
+            advice = """
+            ### Encouragement and Advice
+            - **Great News**: Your ovaries show no signs of PCOS.
+            - **Maintain Health**: Keep up with a balanced diet and regular exercise.
+            - **Regular Check-ups**: Continue routine gynecological examinations for ongoing health monitoring.
+            - **Awareness**: Stay informed about women's health issues for preventive care.
+            """
         else:
             st.error("The ultrasound image is classified as **Infected**.")
             clinical_insights = """
-            Clinical Insights:
+            **Clinical Insights**:
             - Increased ovarian size (>10 cm³).
             - Presence of 12+ follicles (2-9 mm) arranged peripherally.
             - "String of pearls" appearance observed.
             - Increased stromal echogenicity.
             - Potential thickened endometrium.
             """
+            advice = """
+            ### Encouragement and Advice
+            - **You Are Not Alone**: Many individuals successfully manage PCOS with the right support and care.
+            - **Consultation**: Consult a gynecologist for further evaluation and management.
+            - **Treatment Options**: Discuss potential treatments such as lifestyle changes, medications, or hormonal therapy.
+            - **Self-Care**: Stay proactive in monitoring symptoms and following up with healthcare professionals.
+            - **Support Groups**: Reach out to support groups or trusted healthcare providers for guidance.
+            """
 
-        # Display clinical insights
+        # Display clinical insights and advice
         st.markdown(clinical_insights)
+        st.markdown(advice)
 
         # Generate and Download PDF
         if st.button("Download Report"):
@@ -106,8 +122,9 @@ if options == "🖼️ Upload & Predict":
             pdf.ln(10)
             pdf.multi_cell(200, 10, txt=clinical_insights)
             pdf.ln(10)
+            pdf.multi_cell(200, 10, txt=advice)
             pdf.cell(200, 10, txt="Uploaded Ultrasound Image:", ln=True)
-            pdf.image(uploaded_image_path, x=10, y=None, w=100)  # Adjust size and position as needed
+            pdf.image(uploaded_image_path, x=10, y=None, w=100)
 
             # Generate PDF as bytes
             pdf_content = pdf.output(dest="S").encode("latin1")
@@ -131,7 +148,6 @@ elif options == "📊 About the Model":
     - **Infected**: Presence of polycystic ovaries.
     - **Noninfected**: Normal ovaries without signs of PCOS.
     """)
-
     st.markdown("#### Model Performance During Training")
     st.image("1.jpeg", caption="Training and Validation Accuracy", use_container_width=True)
     st.image("2.jpeg", caption="Training and Validation Loss", use_container_width=True)
