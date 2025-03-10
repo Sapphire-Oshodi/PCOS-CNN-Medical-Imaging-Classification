@@ -3,19 +3,20 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from PIL import Image
 import numpy as np
-import requests
 import os
+import gdown
 
-# Download model from Google Drive if not already downloaded
+# Function to load the trained model, download it if necessary
 @st.cache_resource
 def load_trained_model():
-    model_path = "Pcos_Scan_model.h5"
+    model_path = "Model/Pcos_Scan_model.h5"
+    drive_link = "https://drive.google.com/uc?id=1UTBOUNtIzhAtCRDzI5D7TnsGMHsY43D-"
+
+    # Download the model if it does not exist
     if not os.path.exists(model_path):
-        with st.spinner("Downloading model..."):
-            url = "https://drive.google.com/uc?id=1UTBOUNtIzhAtCRDzI5D7TnsGMHsY43D-"  # Replace with your Google Drive file ID
-            response = requests.get(url)
-            with open(model_path, "wb") as f:
-                f.write(response.content)
+        os.makedirs("Model", exist_ok=True)
+        gdown.download(drive_link, model_path, quiet=False)
+
     return load_model(model_path)
 
 model = load_trained_model()
