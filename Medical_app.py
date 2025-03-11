@@ -24,22 +24,25 @@ model = load_trained_model()
 
 # Sidebar with logo and navigation
 st.sidebar.image("Cycleec.png", use_container_width=True)
+
+# User Type Selection
+selected_user_type = st.sidebar.selectbox(
+    "Select User Type:",
+    ["Patient", "Healthcare Professional", "Researcher"]
+)
+
+# Section Navigation
 options = st.sidebar.radio(
     "Choose a section:",
     [
-        "🎮 Upload & Predict",
+        "🖼️ Upload & Predict",
         "📊 About the Model",
-        "🧫 Evaluation",
+        "🧪 Evaluation",
         "👥 Team",
         "💡 For Life"
     ]
 )
 
-# User Type Selection
-selected_user_type = st.sidebar.radio(
-    "Select User Type:", 
-    ["Patient", "Healthcare Professional", "Researcher"]
-)
 
 # Upload & Predict section
 if options == "🎮 Upload & Predict":
