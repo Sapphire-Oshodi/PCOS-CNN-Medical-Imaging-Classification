@@ -43,9 +43,8 @@ options = st.sidebar.radio(
     ]
 )
 
-
-# Upload & Predict section
-if options == "🎮 Upload & Predict":
+# Upload & Predict Section
+if options == "🖼️ Upload & Predict":
     st.title("Welcome to the Medical Imaging Diagnosis PCOS Dashboard")
     st.image("pngwing.com (25).png", use_container_width=True)
     st.markdown(
@@ -169,7 +168,6 @@ if options == "🎮 Upload & Predict":
 
         # Generate and Download PDF
         if st.button("Download Report"):
-            # Save uploaded image temporarily
             uploaded_image_path = "uploaded_image.jpg"
             img.save(uploaded_image_path)
 
@@ -182,20 +180,16 @@ if options == "🎮 Upload & Predict":
             pdf.cell(200, 10, txt=f"Classification Result: {result}", ln=True)
             pdf.cell(200, 10, txt=f"Prediction Confidence: {confidence}%", ln=True)
             pdf.ln(10)
-            pdf.multi_cell(200, 10, txt=clinical_insights.replace("### ", "").replace("**", ""))
+            pdf.multi_cell(0, 10, txt=clinical_insights.replace("### ", "").replace("**", ""))
             pdf.ln(5)
-            pdf.multi_cell(200, 10, txt=advice.replace("### ", "").replace("**", ""))
+            pdf.multi_cell(0, 10, txt=advice.replace("### ", "").replace("**", ""))
             pdf.ln(10)
             pdf.cell(200, 10, txt="Uploaded Ultrasound Image:", ln=True)
             pdf.image(uploaded_image_path, x=10, y=None, w=100)
 
-            # Generate PDF as bytes
             pdf_content = pdf.output(dest="S").encode("latin1")
-
-            # Clean up temporary file
             os.remove(uploaded_image_path)
 
-            # Streamlit download button
             st.download_button(
                 label="Download Report as PDF",
                 data=pdf_content,
@@ -203,20 +197,19 @@ if options == "🎮 Upload & Predict":
                 mime="application/pdf"
             )
 
+# The remaining sections (About the Model, Evaluation, Team, For Life)
+elif options == "📊 About the Model":
+    st.header("📊 About the Model")
+    st.write("This model is a **Convolutional Neural Network (CNN)** trained to classify ultrasound images.")
 
-# About the Model, Evaluation, Team, For Life) remain unchanged.
-        elif options == "📊 About the Model":
-            st.header("📊 About the Model")
-            st.write("This model is a **Convolutional Neural Network (CNN)** trained to classify ultrasound images.")
-        
-        elif options == "🧪 Evaluation":
-            st.header("🧪 Model Evaluation")
-            st.image("3.jpeg", caption="Confusion Matrix", use_container_width=True)
-        
-        elif options == "👥 Team":
-            st.header("👥 Meet the Team")
-            st.write("This project was developed by a collaborative team.")
-        
-        elif options == "💡 For Life":
-            st.header("For Life: Stay Inspired")
-            st.write("Life is a journey filled with challenges, but every challenge is an opportunity to grow stronger.")
+elif options == "🧪 Evaluation":
+    st.header("🧪 Model Evaluation")
+    st.image("3.jpeg", caption="Confusion Matrix", use_container_width=True)
+
+elif options == "👥 Team":
+    st.header("👥 Meet the Team")
+    st.write("This project was developed by a collaborative team.")
+
+elif options == "💡 For Life":
+    st.header("For Life: Stay Inspired")
+    st.write("Life is a journey filled with challenges, but every challenge is an opportunity to grow stronger.")
