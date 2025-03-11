@@ -72,20 +72,23 @@ if options == "🖼️ Upload & Predict":
         if result == "Noninfected":
             st.success("The ultrasound image is classified as **Noninfected**.")
             clinical_insights = """
+            Clinical Insights:
             - Normal ovarian size (<10 cm³).
             - Fewer than 12 follicles, evenly distributed.
             - Homogeneous ovarian stroma.
             - No cystic patterns detected.
             """
             advice = """
-            - **Great News**: Your ovaries show no signs of PCOS.
-            - **Maintain Health**: Keep up with a balanced diet and regular exercise.
-            - **Regular Check-ups**: Continue routine gynecological examinations for ongoing health monitoring.
-            - **Awareness**: Stay informed about women's health issues for preventive care.
+            Encouragement and Advice:
+            - Great News: Your ovaries show no signs of PCOS.
+            - Maintain Health: Keep up with a balanced diet and regular exercise.
+            - Regular Check-ups: Continue routine gynecological examinations for ongoing health monitoring.
+            - Awareness: Stay informed about women's health issues for preventive care.
             """
         else:
             st.error("The ultrasound image is classified as **Infected**.")
             clinical_insights = """
+            Clinical Insights:
             - Increased ovarian size (>10 cm³).
             - Presence of 12+ follicles (2-9 mm) arranged peripherally.
             - "String of pearls" appearance observed.
@@ -93,18 +96,21 @@ if options == "🖼️ Upload & Predict":
             - Potential thickened endometrium.
             """
             advice = """
-            - **You Are Not Alone**: Many individuals successfully manage PCOS with the right support and care.
-            - **Consultation**: Consult a gynecologist for further evaluation and management.
-            - **Treatment Options**: Discuss potential treatments such as lifestyle changes, medications, or hormonal therapy.
-            - **Self-Care**: Stay proactive in monitoring symptoms and following up with healthcare professionals.
-            - **Support Groups**: Reach out to support groups or trusted healthcare providers for guidance.
+            Encouragement and Advice:
+            - You Are Not Alone: Many individuals successfully manage PCOS with the right support and care.
+            - Consultation: Consult a gynecologist for further evaluation and management.
+            - Treatment Options: Discuss potential treatments such as lifestyle changes, medications, or hormonal therapy.
+            - Self-Care: Stay proactive in monitoring symptoms and following up with healthcare professionals.
+            - Support Groups: Reach out to support groups or trusted healthcare providers for guidance.
             """
 
-        # Display insights and advice
-        st.markdown("### Clinical Insights")
+        # Display clinical insights and advice
         st.markdown(clinical_insights)
-        st.markdown("### Encouragement and Advice")
         st.markdown(advice)
+
+        # Clean Markdown formatting for PDF content
+        cleaned_clinical_insights = clinical_insights.replace("### ", "").replace("**", "").strip()
+        cleaned_advice = advice.replace("### ", "").replace("**", "").strip()
 
         # Generate and Download PDF
         if st.button("Download Report"):
@@ -130,14 +136,14 @@ if options == "🖼️ Upload & Predict":
             pdf.set_font("Arial", style="B", size=12)
             pdf.cell(200, 10, txt="Clinical Insights:", ln=True)
             pdf.set_font("Arial", size=12)
-            pdf.multi_cell(0, 10, txt=clinical_insights)
+            pdf.multi_cell(0, 10, txt=cleaned_clinical_insights)
             pdf.ln(5)
 
             # Encouragement and Advice
             pdf.set_font("Arial", style="B", size=12)
             pdf.cell(200, 10, txt="Encouragement and Advice:", ln=True)
             pdf.set_font("Arial", size=12)
-            pdf.multi_cell(0, 10, txt=advice)
+            pdf.multi_cell(0, 10, txt=cleaned_advice)
             pdf.ln(10)
 
             # Uploaded Image
@@ -157,3 +163,62 @@ if options == "🖼️ Upload & Predict":
                 file_name=f"{user_name.replace(' ', '_')}_PCOS_Report.pdf",
                 mime="application/pdf"
             )
+
+# About the Model section
+elif options == "📊 About the Model":
+    st.header("📊 About the Model")
+    st.write("""
+    This model is a **Convolutional Neural Network (CNN)** trained to classify ultrasound images as:
+    - **Infected**: Presence of polycystic ovaries.
+    - **Noninfected**: Normal ovaries without signs of PCOS.
+    """)
+    st.markdown("#### Model Performance During Training")
+    st.image("1.jpeg", caption="Training and Validation Accuracy", use_container_width=True)
+    st.image("2.jpeg", caption="Training and Validation Loss", use_container_width=True)
+
+# Evaluation section
+elif options == "🧪 Evaluation":
+    st.header("🧪 Model Evaluation")
+    st.write("Evaluate the model's performance on the test dataset.")
+    st.markdown("#### Confusion Matrix")
+    st.image("3.jpeg", caption="Confusion Matrix", use_container_width=True)
+
+# Team section
+elif options == "👥 Team":
+    st.header("👥 Meet the Team")
+    st.write("""
+    This project was developed by:
+    - **Sapphire Oshodi**
+    - **Samuel Odukoya**
+    - **Habeebat Jinadu**
+    - **Hamzat Akolade**
+    - **Tiletile Toheebat**
+
+    
+    ### Acknowledgements
+    We thank our mentors, instructors, and the dataset contributors for their valuable guidance and support.
+    """)
+
+# For Life section
+elif options == "💡 For Life":
+    st.header("For Life: Stay Inspired")
+    st.write("""
+    Life is a journey filled with challenges, but every challenge is an opportunity to grow stronger.
+    
+    ### You Are Not Alone
+    - Support and care are always within reach.
+    - Surround yourself with positivity and hope.
+
+    ### Inspirational Quote
+    > *"PCOS is a part of your story, but it is not the whole story. You are so much more than a diagnosis."*
+
+    ### 📚 Resources
+    - [PCOS Awareness Association](https://www.pcosaa.org/)
+    - [Support Groups](https://www.resolve.org/support/)
+    - [Mindfulness Exercises](https://www.mindful.org/)
+    """)
+    st.image(
+        "105 Uplifting Affirmations for a Healthy Body and Beautiful Mind.jpeg",
+        caption="Keep Moving Forward",
+        use_container_width=True,
+    )
