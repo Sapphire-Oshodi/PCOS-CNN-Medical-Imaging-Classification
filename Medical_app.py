@@ -76,91 +76,12 @@ if options == "🖼️ Upload & Predict":
         # Generate dynamic content based on user type and classification result
         if result == "Noninfected":
             st.success("The ultrasound image is classified as **Noninfected**.")
-            if selected_user_type == "Patient":
-                clinical_insights = """
-                ### Clinical Insights:
-                - Normal ovarian size (<10 cm³).
-                - Fewer than 12 follicles, evenly distributed.
-                - Homogeneous ovarian stroma.
-                - No cystic patterns detected.
-                """
-                advice = """
-                ### Encouragement and Advice
-                - **Great News**: Your ovaries show no signs of PCOS.
-                - **Maintain Health**: Keep up with a balanced diet and regular exercise.
-                - **Regular Check-ups**: Continue routine gynecological examinations for ongoing health monitoring.
-                - **Awareness**: Stay informed about women's health issues for preventive care.
-                """
-            elif selected_user_type == "Healthcare Professional":
-                clinical_insights = """
-                ### Clinical Insights:
-                - The patient's ovarian size is within the normal range (<10 cm³).
-                - Fewer than 12 follicles detected, evenly distributed.
-                - Homogeneous ovarian stroma with no visible cystic patterns.
-                """
-                advice = """
-                ### Professional Notes
-                - **Routine Monitoring**: Continue regular health check-ups for the patient.
-                - **Health Maintenance**: Encourage a healthy lifestyle and preventive care.
-                - **Patient Education**: Provide guidance on maintaining reproductive health.
-                """
-            elif selected_user_type == "Researcher":
-                clinical_insights = """
-                ### Clinical Insights:
-                - Observations align with non-PCOS characteristics: Normal ovarian size (<10 cm³).
-                - Less than 12 follicles detected, evenly distributed.
-                - Homogeneous stroma without cystic patterns.
-                """
-                advice = """
-                ### Research Considerations
-                - **Sample Addition**: Consider including similar cases in control group studies.
-                - **Data Analysis**: Analyze how non-PCOS markers correlate with other health metrics.
-                - **Publication Notes**: Document findings for inclusion in broader PCOS studies.
-                """
+            clinical_insights = "..."  # Add dynamic content for Noninfected
+            advice = "..."  # Add advice for Noninfected
         else:
             st.error("The ultrasound image is classified as **Infected**.")
-            if selected_user_type == "Patient":
-                clinical_insights = """
-                ### Clinical Insights:
-                - Increased ovarian size (>10 cm³).
-                - Presence of 12+ follicles (2-9 mm) arranged peripherally.
-                - "String of pearls" appearance observed.
-                - Increased stromal echogenicity.
-                - Potential thickened endometrium.
-                """
-                advice = """
-                ### Encouragement and Advice
-                - **You Are Not Alone**: Many individuals successfully manage PCOS with the right support and care.
-                - **Consultation**: Consult a gynecologist for further evaluation and management.
-                - **Treatment Options**: Discuss potential treatments such as lifestyle changes, medications, or hormonal therapy.
-                - **Self-Care**: Stay proactive in monitoring symptoms and following up with healthcare professionals.
-                """
-            elif selected_user_type == "Healthcare Professional":
-                clinical_insights = """
-                ### Clinical Insights:
-                - The patient shows increased ovarian size (>10 cm³).
-                - More than 12 follicles arranged peripherally ("String of pearls").
-                - Increased stromal echogenicity and potential thickened endometrium.
-                """
-                advice = """
-                ### Professional Notes
-                - **Treatment Plan**: Discuss personalized treatment options with the patient.
-                - **Support**: Provide emotional support and educate about PCOS management strategies.
-                - **Monitoring**: Schedule follow-ups to monitor changes and treatment efficacy.
-                """
-            elif selected_user_type == "Researcher":
-                clinical_insights = """
-                ### Clinical Insights:
-                - Observations suggest PCOS: Increased ovarian size (>10 cm³) with peripheral follicles.
-                - Notable "String of pearls" pattern and increased stromal echogenicity.
-                - Presence of a potentially thickened endometrium.
-                """
-                advice = """
-                ### Research Considerations
-                - **Case Inclusion**: Include in PCOS-positive datasets for analysis.
-                - **Comparative Studies**: Compare against non-PCOS samples for pattern identification.
-                - **Data Sharing**: Consider sharing findings in academic or clinical journals.
-                """
+            clinical_insights = "..."  # Add dynamic content for Infected
+            advice = "..."  # Add advice for Infected
 
         # Display clinical insights and advice
         st.markdown(clinical_insights)
@@ -197,19 +118,63 @@ if options == "🖼️ Upload & Predict":
                 mime="application/pdf"
             )
 
-# The remaining sections (About the Model, Evaluation, Team, For Life)
+# About the Model Section
 elif options == "📊 About the Model":
     st.header("📊 About the Model")
-    st.write("This model is a **Convolutional Neural Network (CNN)** trained to classify ultrasound images.")
+    st.write("""
+    This model is a **Convolutional Neural Network (CNN)** trained to classify ultrasound images as:
+    - **Infected**: Presence of polycystic ovaries.
+    - **Noninfected**: Normal ovaries without signs of PCOS.
+    """)
 
+    st.markdown("#### Model Performance During Training")
+
+    # Display graphs saved from Jupyter Notebook
+    st.image("1.jpeg", caption="Training and Validation Accuracy", use_container_width=True)
+    st.image("2.jpeg", caption="Training and Validation Loss", use_container_width=True)
+
+# Evaluation Section
 elif options == "🧪 Evaluation":
     st.header("🧪 Model Evaluation")
+    st.write("Evaluate the model's performance on the test dataset.")
+    st.markdown("#### Confusion Matrix")
     st.image("3.jpeg", caption="Confusion Matrix", use_container_width=True)
 
+# Team Section
 elif options == "👥 Team":
     st.header("👥 Meet the Team")
-    st.write("This project was developed by a collaborative team.")
+    st.write("""
+    This project was developed by:
+    - **Sapphire Oshodi**
+    - **Samuel Odukoya**
+    - **Habeebat Jinadu**
+    - **Hamzat Akolade**
+    - **Tiletile Toheebat**
+    
+    ### Acknowledgements
+    We thank our mentors, instructors, and the dataset contributors for their valuable guidance and support.
+    """)
 
+# For Life Section
 elif options == "💡 For Life":
     st.header("For Life: Stay Inspired")
-    st.write("Life is a journey filled with challenges, but every challenge is an opportunity to grow stronger.")
+    st.write("""
+    Life is a journey filled with challenges, but every challenge is an opportunity to grow stronger.
+    
+    ### You Are Not Alone
+    - Support and care are always within reach.
+    - Surround yourself with positivity and hope.
+
+    ### Inspirational Quote
+    > *"PCOS is a part of your story, but it is not the whole story. You are so much more than a diagnosis."*
+
+    ### 📚 Resources
+    - [PCOS Awareness Association](https://www.pcosaa.org/)
+    - [Support Groups](https://www.resolve.org/support/)
+    - [Mindfulness Exercises](https://www.mindful.org/)
+    """)
+    st.image(
+        "105 Uplifting Affirmations for a Healthy Body and Beautiful Mind.jpeg",
+        caption="Keep Moving Forward",
+        use_container_width=True,
+    )
