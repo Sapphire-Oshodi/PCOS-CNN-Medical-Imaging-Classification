@@ -76,12 +76,91 @@ if options == "🖼️ Upload & Predict":
         # Generate dynamic content based on user type and classification result
         if result == "Noninfected":
             st.success("The ultrasound image is classified as **Noninfected**.")
-            clinical_insights = "..."  # Add dynamic content for Noninfected
-            advice = "..."  # Add advice for Noninfected
+            if selected_user_type == "Patient":
+                clinical_insights = """
+                ### Clinical Insights:
+                - Normal ovarian size (<10 cm³).
+                - Fewer than 12 follicles, evenly distributed.
+                - Homogeneous ovarian stroma.
+                - No cystic patterns detected.
+                """
+                advice = """
+                ### Encouragement and Advice
+                - **Great News**: Your ovaries show no signs of PCOS.
+                - **Maintain Health**: Keep up with a balanced diet and regular exercise.
+                - **Regular Check-ups**: Continue routine gynecological examinations for ongoing health monitoring.
+                - **Awareness**: Stay informed about women's health issues for preventive care.
+                """
+            elif selected_user_type == "Healthcare Professional":
+                clinical_insights = """
+                ### Clinical Insights:
+                - The patient's ovarian size is within the normal range (<10 cm³).
+                - Fewer than 12 follicles detected, evenly distributed.
+                - Homogeneous ovarian stroma with no visible cystic patterns.
+                """
+                advice = """
+                ### Professional Notes
+                - **Routine Monitoring**: Continue regular health check-ups for the patient.
+                - **Health Maintenance**: Encourage a healthy lifestyle and preventive care.
+                - **Patient Education**: Provide guidance on maintaining reproductive health.
+                """
+            elif selected_user_type == "Researcher":
+                clinical_insights = """
+                ### Clinical Insights:
+                - Observations align with non-PCOS characteristics: Normal ovarian size (<10 cm³).
+                - Less than 12 follicles detected, evenly distributed.
+                - Homogeneous stroma without cystic patterns.
+                """
+                advice = """
+                ### Research Considerations
+                - **Sample Addition**: Consider including similar cases in control group studies.
+                - **Data Analysis**: Analyze how non-PCOS markers correlate with other health metrics.
+                - **Publication Notes**: Document findings for inclusion in broader PCOS studies.
+                """
         else:
             st.error("The ultrasound image is classified as **Infected**.")
-            clinical_insights = "..."  # Add dynamic content for Infected
-            advice = "..."  # Add advice for Infected
+            if selected_user_type == "Patient":
+                clinical_insights = """
+                ### Clinical Insights:
+                - Increased ovarian size (>10 cm³).
+                - Presence of 12+ follicles (2-9 mm) arranged peripherally.
+                - "String of pearls" appearance observed.
+                - Increased stromal echogenicity.
+                - Potential thickened endometrium.
+                """
+                advice = """
+                ### Encouragement and Advice
+                - **You Are Not Alone**: Many individuals successfully manage PCOS with the right support and care.
+                - **Consultation**: Consult a gynecologist for further evaluation and management.
+                - **Treatment Options**: Discuss potential treatments such as lifestyle changes, medications, or hormonal therapy.
+                - **Self-Care**: Stay proactive in monitoring symptoms and following up with healthcare professionals.
+                """
+            elif selected_user_type == "Healthcare Professional":
+                clinical_insights = """
+                ### Clinical Insights:
+                - The patient shows increased ovarian size (>10 cm³).
+                - More than 12 follicles arranged peripherally ("String of pearls").
+                - Increased stromal echogenicity and potential thickened endometrium.
+                """
+                advice = """
+                ### Professional Notes
+                - **Treatment Plan**: Discuss personalized treatment options with the patient.
+                - **Support**: Provide emotional support and educate about PCOS management strategies.
+                - **Monitoring**: Schedule follow-ups to monitor changes and treatment efficacy.
+                """
+            elif selected_user_type == "Researcher":
+                clinical_insights = """
+                ### Clinical Insights:
+                - Observations suggest PCOS: Increased ovarian size (>10 cm³) with peripheral follicles.
+                - Notable "String of pearls" pattern and increased stromal echogenicity.
+                - Presence of a potentially thickened endometrium.
+                """
+                advice = """
+                ### Research Considerations
+                - **Case Inclusion**: Include in PCOS-positive datasets for analysis.
+                - **Comparative Studies**: Compare against non-PCOS samples for pattern identification.
+                - **Data Sharing**: Consider sharing findings in academic or clinical journals.
+                """
 
         # Display clinical insights and advice
         st.markdown(clinical_insights)
@@ -102,7 +181,6 @@ if options == "🖼️ Upload & Predict":
             pdf.cell(200, 10, txt=f"Prediction Confidence: {confidence}%", ln=True)
             pdf.ln(10)
             pdf.multi_cell(0, 10, txt=clinical_insights.replace("### ", "").replace("**", ""))
-            pdf.ln(5)
             pdf.multi_cell(0, 10, txt=advice.replace("### ", "").replace("**", ""))
             pdf.ln(10)
             pdf.cell(200, 10, txt="Uploaded Ultrasound Image:", ln=True)
@@ -128,8 +206,6 @@ elif options == "📊 About the Model":
     """)
 
     st.markdown("#### Model Performance During Training")
-
-    # Display graphs saved from Jupyter Notebook
     st.image("1.jpeg", caption="Training and Validation Accuracy", use_container_width=True)
     st.image("2.jpeg", caption="Training and Validation Loss", use_container_width=True)
 
